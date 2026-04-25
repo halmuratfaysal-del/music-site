@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>faysal音乐空间</title>
+
+<style>
+body{
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  margin:0;
+}
+
+h1{
+  text-align:center;
+  padding:20px;
+}
+
+.container{
+  width:90%;
+  max-width:1000px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.card{
+  background:#1e293b;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.cover{
+  width:100%;
+  height:200px;
+  background-size:cover;
+  background-position:center;
+  position:relative;
+  cursor:pointer;
+}
+
+.play-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  color:black;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+}
+
+.info{
+  padding:10px;
+}
+
+/* 大屏播放器 */
+#playerPage{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#0b1220;
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+#playerCover{
+  width:260px;
+  height:260px;
+  border-radius:20px;
+  background-size:cover;
+  background-position:center;
+  margin-bottom:20px;
+}
+
+#playerTitle{
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+#playerDesc{
+  opacity:0.7;
+  font-size:14px;
+  margin-bottom:20px;
+  text-align:center;
+  width:80%;
+}
+
+audio{
+  width:80%;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎧 faysal音乐空间</h1>
+
+<div class="container">
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover1.jpg')" onclick="playSong(0)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>倒计时·三天</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover2.jpg')" onclick="playSong(1)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>放学后的操场</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover3.jpg')" onclick="playSong(2)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>妈妈的手</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover4.jpg')" onclick="playSong(3)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>同桌的你还在写</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover5.jpg')" onclick="playSong(4)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>晚自习的灯</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover6.jpg')" onclick="playSong(5)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>写不完的作业</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover7.jpg')" onclick="playSong(6)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>月考之后</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover8.jpg')" onclick="playSong(7)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>早起的那束光</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover9.jpg')" onclick="playSong(8)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>再见之前</div></div>
+</div>
+
+<div class="card">
+  <div class="cover" style="background-image:url('cover10.jpg')" onclick="playSong(9)">
+    <div class="play-btn">▶</div>
+  </div>
+  <div class="info"><div>毕业以后</div></div>
+</div>
+
+</div>
+
+<!-- 大屏播放器 -->
+<div id="playerPage">
+
+<div onclick="closePlayer()" style="
+position:absolute;
+top:20px;
+left:20px;
+font-size:20px;
+cursor:pointer;">← 返回</div>
+
+<div id="playerCover"></div>
+
+<h2 id="playerTitle"></h2>
+
+<p id="playerDesc"></p>
+
+<audio id="bigAudio" controls></audio>
+
+</div>
+
+<script>
+const descriptions = [
+"时间在倒数，但青春正开始燃烧",
+"夕阳下的球场，是少年最真实的自由",
+"最温柔的力量，来自最普通的爱",
+"灯光下的坚持，是没人看到的努力",
+"孤独的夜晚，梦想在悄悄发光",
+"写不完的作业，写不完的未来",
+"成绩之外，还有成长",
+"清晨的第一缕光，是新的开始",
+"在告别之前，我们都在努力成为更好的自己",
+"离开之后，才懂什么叫青春"
+];
+
+function playSong(index){
+  const titles=document.querySelectorAll(".info div");
+
+  const player=document.getElementById("playerPage");
+  const cover=document.getElementById("playerCover");
+  const title=document.getElementById("playerTitle");
+  const desc=document.getElementById("playerDesc");
+  const audio=document.getElementById("bigAudio");
+
+  cover.style.backgroundImage="url('cover"+(index+1)+".jpg')";
+  title.innerText=titles[index].innerText;
+  desc.innerText=descriptions[index];
+  audio.src="song"+(index+1)+".mp3";
+
+  player.style.display="flex";
+  audio.play();
+}
+
+function closePlayer(){
+  const player=document.getElementById("playerPage");
+  const audio=document.getElementById("bigAudio");
+
+  audio.pause();
+  player.style.display="none";
+}
+</script>
+
+</body>
+</html>
